@@ -23,16 +23,14 @@ class LocationModel extends BaseModel
         $res->execute($arr);
         $result = $res->fetch();
         if ($result['ter_type_id'] == 0) {
-        	if (($id == 8000000000) || ($id == 8500000000)) {
-        		$list = "<label for=".$id.">Area of the city </label>";
-        		$sql = "SELECT ter_id, ter_name  FROM " . self::$tableName . " WHERE ter_pid = :id and ter_type_id = 3 ORDER BY ter_name";
-        	} else {
-        		$sql = "SELECT ter_id, ter_name  FROM " . self::$tableName . " WHERE ter_pid = :id and ter_type_id = 1 ORDER BY ter_name";
-        	$list = "<label for=".$id.">City </label>";
-        	}
+        	$sql = "SELECT ter_id, ter_name  FROM " . self::$tableName . " WHERE ter_pid = :id ORDER BY ter_name";
+        	$list = "<label for=".$id.">Next Area </label>";
+        } elseif ($result['ter_type_id'] == 1) {
+        	$list = "<label for=".$id.">Next Area </label>";
+        	$sql = "SELECT ter_id, ter_name  FROM " . self::$tableName . " WHERE ter_pid = :id and ter_type_id =3 ORDER BY ter_name";
         } else {
-        	$list = "<label for=".$id.">Area of the city </label>";
-        	$sql = "SELECT ter_id, ter_name  FROM " . self::$tableName . " WHERE ter_pid = :id and ter_type_id = 3 ORDER BY ter_name";
+        	$list = "<label for=".$id.">Next Area </label>";
+        	$sql = "SELECT ter_id, ter_name  FROM " . self::$tableName . " WHERE ter_pid = :id ORDER BY ter_name";
         }
     	$arr = array('id' => $id);
         $res = $this->pdo->prepare($sql);
